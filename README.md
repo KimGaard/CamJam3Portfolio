@@ -5,15 +5,19 @@ We have placed the following four lines in
 on the Pi to setup ad-hoc on boot 
 
 Set the wifi interface to have type ibss instead of managed:
+
 sudo iw wlan0 set type ibss
 
 Set the wifi interface active:
+
 sudo ip link set wlan0 up
 
 Create a wifi network with ssid pibot on channel 11 (2462MHz):
+
 sudo iw wlan0 ibss join pibot 2462
 
 Add static IP address to the wifi interface:
+
 sudo ip address add 192.168.99.9/16 dev wlan0
 
 
@@ -22,20 +26,25 @@ in shell on laptop:
 
 Create a new interface so the laptop still would be able to join
 a wifi network without reverting everything:
+
 sudo iw phy phy0 interface add ibs0 type ibss
 
 Set type of ibs0 interface to ibss if it is not already:
+
 sudo iw ibs0 set type ibss
 
 Set a static IP on the ibs0 interface so the laptop is able to find and join
 the Pi's ad-hoc network:
+
 sudo ip address add 192.168.99.5/16 dev ibs0
 
 Set the interface active:
+
 sudo rfkill unblock wifi
 sudo ip link set ibs0 up
 
 Join the pibot network:
+
 sudo iw ibs0 ibss join pibot 2462
 
 
@@ -50,7 +59,7 @@ All four commands, 'getdist' 'getmotors' 'start' and 'stop' all works as intende
 The functions can be called by echoing to the TCP server using socat:
 Example:
 	echo start | socat - tcp:192.168.99.9:8080
-
+	
 will start the "follow wall" code.
 
 The name TCPServer.py is a bit misleading as the functions to 
